@@ -3,6 +3,7 @@ package com.ryan.luckywheel;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -15,27 +16,29 @@ import rubikstudio.library.PielView;
 
 public class MainActivity extends Activity {
     List<LuckyItem> data = new ArrayList<>();
-
+    TextView totalTv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
+        final int totalScore = 0;
         final LuckyWheelView luckyWheelView = (LuckyWheelView) findViewById(R.id.luckyWheel);
-
+        totalTv = findViewById(R.id.total_tv);
+        for(int i=0;i<3;i++){
         LuckyItem luckyItem1 = new LuckyItem();
-        luckyItem1.topText = "100";
+        luckyItem1.topText = "50";
         luckyItem1.icon = R.drawable.test1;
         luckyItem1.color = 0xffFFF3E0;
         data.add(luckyItem1);
 
         LuckyItem luckyItem2 = new LuckyItem();
-        luckyItem2.topText = "200";
+        luckyItem2.topText = "100";
         luckyItem2.icon = R.drawable.test2;
         luckyItem2.color = 0xffFFE0B2;
         data.add(luckyItem2);
-
+        }
+/*
         LuckyItem luckyItem3 = new LuckyItem();
         luckyItem3.topText = "300";
         luckyItem3.icon = R.drawable.test3;
@@ -55,7 +58,7 @@ public class MainActivity extends Activity {
         luckyItem5.icon = R.drawable.test5;
         luckyItem5.color = 0xffFFE0B2;
         data.add(luckyItem5);
-/*
+
         LuckyItem luckyItem6 = new LuckyItem();
         luckyItem6.topText = "600";
         luckyItem6.icon = R.drawable.test6;
