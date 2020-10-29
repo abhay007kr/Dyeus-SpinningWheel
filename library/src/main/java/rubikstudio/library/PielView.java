@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -175,13 +176,14 @@ public class PielView extends View {
         init();
 
         float tmpAngle = mStartAngle;
-        float sweepAngle = 360f / mLuckyItemList.size();
+        float sweepAngle = 360f / mLuckyItemList.size()/2;
 
-        for (int i = 0; i < mLuckyItemList.size(); i++) {
-
-            if (mLuckyItemList.get(i).color != 0) {
+        for (int i = 0; i < mLuckyItemList.size()*2; i++) {
+            //LuckyItem luckyItem = mLuckyItemList.get(getFallBackRandomIndex());
+            LuckyItem luckyItem = mLuckyItemList.get(i%mLuckyItemList.size());
+            if (luckyItem.color != 0) {
                 mArcPaint.setStyle(Paint.Style.FILL);
-                mArcPaint.setColor(mLuckyItemList.get(i).color);
+                mArcPaint.setColor(luckyItem.color);
                 canvas.drawArc(mRange, tmpAngle, sweepAngle, true, mArcPaint);
             }
 
@@ -192,16 +194,17 @@ public class PielView extends View {
                 canvas.drawArc(mRange, tmpAngle, sweepAngle, true, mArcPaint);
             }
 
-            int sliceColor = mLuckyItemList.get(i).color != 0 ? mLuckyItemList.get(i).color : defaultBackgroundColor;
+            int sliceColor = luckyItem.color != 0 ? luckyItem.color : defaultBackgroundColor;
 
-            if (!TextUtils.isEmpty(mLuckyItemList.get(i).topText))
-                drawTopText(canvas, tmpAngle, sweepAngle, mLuckyItemList.get(i).topText, sliceColor);
-            if (!TextUtils.isEmpty(mLuckyItemList.get(i).secondaryText))
-                drawSecondaryText(canvas, tmpAngle, mLuckyItemList.get(i).secondaryText, sliceColor);
+            if (!TextUtils.isEmpty(luckyItem.topText))
+                drawSecondaryText(canvas, tmpAngle, luckyItem.topText, sliceColor);
+                //drawTopText(canvas, tmpAngle, sweepAngle, luckyItem.topText, sliceColor);
+            //if (!TextUtils.isEmpty(luckyItem.secondaryText))
+            //    drawSecondaryText(canvas, tmpAngle, luckyItem.secondaryText, sliceColor);
 
-            if (mLuckyItemList.get(i).icon != 0)
+            /*if (luckyItem.icon != 0)
                 drawImage(canvas, tmpAngle, BitmapFactory.decodeResource(getResources(),
-                        mLuckyItemList.get(i).icon));
+                        luckyItem.icon));*/
             tmpAngle += sweepAngle;
         }
 
@@ -213,6 +216,7 @@ public class PielView extends View {
             return;
         mBackgroundPaint = new Paint();
         mBackgroundPaint.setColor(color);
+        //canvas.drawArc();
         canvas.drawCircle(mCenter, mCenter, mCenter - 5, mBackgroundPaint);
     }
 
@@ -242,7 +246,7 @@ public class PielView extends View {
     private void drawImage(Canvas canvas, float tmpAngle, Bitmap bitmap) {
         int imgWidth = mRadius / mLuckyItemList.size();
 
-        float angle = (float) ((tmpAngle + 360f / mLuckyItemList.size() / 2) * Math.PI / 180);
+        float angle = (float) ((tmpAngle + 180f / mLuckyItemList.size() / 2) * Math.PI / 180);
 
         int x = (int) (mCenter + mRadius / 2 / 2 * Math.cos(angle));
         int y = (int) (mCenter + mRadius / 2 / 2 * Math.sin(angle));
@@ -253,11 +257,12 @@ public class PielView extends View {
     }
 
     private void drawCenterImage(Canvas canvas, Drawable drawable) {
-        ;
-        Bitmap bitmap = LuckyWheelUtils.drawableToBitmap(drawable);
+        /*Bitmap bitmap = LuckyWheelUtils.drawableToBitmap(drawable);
         bitmap = Bitmap.createScaledBitmap(bitmap, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), false);
         canvas.drawBitmap(bitmap, getMeasuredWidth() / 2 - bitmap.getWidth() / 2,
                 getMeasuredHeight() / 2 - bitmap.getHeight() / 2, null);
+*/
+        canvas.drawCircle(mCenter, mCenter, getMeasuredWidth() / 6, mBackgroundPaint);
     }
 
     private boolean isColorDark(int color) {
@@ -274,20 +279,23 @@ public class PielView extends View {
      * @param mStr
      */
     private void drawTopText(Canvas canvas, float tmpAngle, float sweepAngle, String mStr, int backgroundColor) {
-        Path path = new Path();
-        path.addArc(mRange, tmpAngle, sweepAngle);
 
         if (textColor == 0)
             mTextPaint.setColor(isColorDark(backgroundColor) ? 0xffffffff : 0xff000000);
 
         Typeface typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL);
         mTextPaint.setTypeface(typeface);
-        mTextPaint.setTextAlign(Paint.Align.LEFT);
+        mTextPaint.setTextAlign(Paint.Align.RIGHT);
         mTextPaint.setTextSize(mTopTextSize);
         float textWidth = mTextPaint.measureText(mStr);
         int hOffset = (int) (mRadius * Math.PI / mLuckyItemList.size() / 2 - textWidth / 2);
 
         int vOffset = mTopTextPadding;
+        Path path = new Path();
+        //path.addArc(mRange, tmpAngle, sweepAngle);
+        path.moveTo(hOffset+20, vOffset);
+        path.lineTo(hOffset+20, vOffset-5000);
+        //path.lineTo(100,100);
 
         canvas.drawTextOnPath(mStr, path, hOffset, vOffset, mTextPaint);
     }
@@ -313,7 +321,7 @@ public class PielView extends View {
 
         float textWidth = mTextPaint.measureText(mStr);
 
-        float initFloat = (tmpAngle + 360f / arraySize / 2);
+        float initFloat = (tmpAngle + 180f / arraySize / 2);
         float angle = (float) (initFloat * Math.PI / 180);
 
         int x = (int) (mCenter + mRadius / 2 / 2 * Math.cos(angle));
@@ -334,7 +342,7 @@ public class PielView extends View {
      * @return
      */
     private float getAngleOfIndexTarget(int index) {
-        return (360f / mLuckyItemList.size()) * index;
+        return (180f / mLuckyItemList.size()) * index;
     }
 
     /**
@@ -370,9 +378,9 @@ public class PielView extends View {
         //If the staring position is already off 0 degrees, make an illusion that the rotation has smoothly been triggered.
         // But this inital animation will just reset the position of the circle to 0 degreees.
         if (getRotation() != 0.0f) {
-            setRotation(getRotation() % 360f);
+            setRotation(getRotation() % 180f);
             TimeInterpolator animationStart = startSlow ? new AccelerateInterpolator() : new LinearInterpolator();
-            //The multiplier is to do a big rotation again if the position is already near 360.
+            //The multiplier is to do a big rotation again if the position is already near 180.
             float multiplier = getRotation() > 200f ? 2 : 1;
             animate()
                     .setInterpolator(animationStart)
@@ -398,7 +406,7 @@ public class PielView extends View {
                         public void onAnimationRepeat(Animator animation) {
                         }
                     })
-                    .rotation(360f * multiplier * rotationAssess)
+                    .rotation(180f * multiplier * rotationAssess)
                     .start();
             return;
         }
@@ -407,7 +415,7 @@ public class PielView extends View {
         // if you still need to reach the same outcome of a positive degrees rotation with the number of rounds reversed.
         if (rotationAssess < 0) mRoundOfNumber++;
 
-        float targetAngle = ((360f * mRoundOfNumber * rotationAssess) + 270f - getAngleOfIndexTarget(index) - (360f / mLuckyItemList.size()) / 2);
+        float targetAngle = ((180f * mRoundOfNumber * rotationAssess) + 270f - getAngleOfIndexTarget(index) - (180f / mLuckyItemList.size()) / 2);
         animate()
                 .setInterpolator(new DecelerateInterpolator())
                 .setDuration(mRoundOfNumber * 1000 + 900L)
@@ -420,7 +428,7 @@ public class PielView extends View {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         isRunning = false;
-                        setRotation(getRotation() % 360f);
+                        setRotation(getRotation() % 180f);
                         if (mPieRotateListener != null) {
                             mPieRotateListener.rotateDone(index);
                         }
@@ -465,7 +473,7 @@ public class PielView extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                viewRotation = (getRotation() + 360f) % 360f;
+                viewRotation = (getRotation() + 180f) % 180f;
                 fingerRotation = Math.toDegrees(Math.atan2(x - xc, yc - y));
                 downPressTime = event.getEventTime();
                 return true;
@@ -492,17 +500,17 @@ public class PielView extends View {
                 // These operators are added so that fling difference can be evaluated
                 // with usually numbers that are only around more or less 100 / -100.
                 if (computedRotation <= -250f) {
-                    computedRotation += 360f;
+                    computedRotation += 180f;
                 } else if (computedRotation >= 250f) {
-                    computedRotation -= 360f;
+                    computedRotation -= 180f;
                 }
 
                 double flingDiff = computedRotation - viewRotation;
                 if (flingDiff >= 200 || flingDiff <= -200) {
                     if (viewRotation <= -50f) {
-                        viewRotation += 360f;
+                        viewRotation += 180f;
                     } else if (viewRotation >= 50f) {
-                        viewRotation -= 360f;
+                        viewRotation -= 180f;
                     }
                 }
 
@@ -535,12 +543,12 @@ public class PielView extends View {
 
     private float newRotationValue(final float originalWheenRotation, final double originalFingerRotation, final double newFingerRotation) {
         double computationalRotation = newFingerRotation - originalFingerRotation;
-        return (originalWheenRotation + (float) computationalRotation + 360f) % 360f;
+        return (originalWheenRotation + (float) computationalRotation + 180f) % 180f;
     }
 
     private int getFallBackRandomIndex() {
         Random rand = new Random();
-        return rand.nextInt(mLuckyItemList.size() - 1) + 0;
+        return rand.nextInt(mLuckyItemList.size() - 1);
     }
 
     /**

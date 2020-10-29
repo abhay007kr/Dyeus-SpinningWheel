@@ -44,6 +44,7 @@ public class MainActivity extends Activity {
 
         //////////////////
         LuckyItem luckyItem4 = new LuckyItem();
+        luckyItem4.secondaryText = "600";
         luckyItem4.topText = "400";
         luckyItem4.icon = R.drawable.test4;
         luckyItem4.color = 0xffFFF3E0;
@@ -54,7 +55,7 @@ public class MainActivity extends Activity {
         luckyItem5.icon = R.drawable.test5;
         luckyItem5.color = 0xffFFE0B2;
         data.add(luckyItem5);
-
+/*
         LuckyItem luckyItem6 = new LuckyItem();
         luckyItem6.topText = "600";
         luckyItem6.icon = R.drawable.test6;
@@ -100,6 +101,7 @@ public class MainActivity extends Activity {
         luckyItem12.icon = R.drawable.test10;
         luckyItem12.color = 0xffFFE0B2;
         data.add(luckyItem12);
+        */
 
         /////////////////////
 
