@@ -59,4 +59,18 @@
             android:text="@string/zero"/>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/reset"
+        android:textSize="20sp"
+        android:textColor="@android:color/white"
+        android:text="@string/reset"
+        android:textStyle="bold"
+        android:background="#F44336"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="350dp"
+        android:layout_marginLeft="152dp"
+        android:layout_alignBottom="@+id/play"
+        android:layout_width="70dp"
+        android:layout_height="50dp" />
+
 </RelativeLayout>

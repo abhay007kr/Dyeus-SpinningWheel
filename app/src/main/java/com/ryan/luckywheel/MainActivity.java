@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,12 +19,14 @@ import rubikstudio.library.PielView;
 public class MainActivity extends Activity {
     List<LuckyItem> data = new ArrayList<>();
     TextView totalTv;
+    Button resetButton;
     int totalScore = 0; int n;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final LuckyWheelView luckyWheelView = (LuckyWheelView) findViewById(R.id.luckyWheel);
+        resetButton = findViewById(R.id.reset);
         totalTv = findViewById(R.id.total_tv);
         for(int i=0;i<3;i++){
         LuckyItem luckyItem1 = new LuckyItem();
@@ -136,6 +139,14 @@ public class MainActivity extends Activity {
                 totalTv.setText(totalScore+"");
                 Toast.makeText(getApplicationContext(), st, Toast.LENGTH_SHORT).show();
 
+            }
+        });
+
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                totalScore = 0;
+                totalTv.setText("0");
             }
         });
     }
