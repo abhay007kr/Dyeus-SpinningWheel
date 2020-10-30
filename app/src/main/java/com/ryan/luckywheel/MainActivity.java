@@ -2,6 +2,7 @@ package com.ryan.luckywheel;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,12 +18,11 @@ import rubikstudio.library.PielView;
 public class MainActivity extends Activity {
     List<LuckyItem> data = new ArrayList<>();
     TextView totalTv;
+    int totalScore = 0; int n;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-        final int totalScore = 0;
         final LuckyWheelView luckyWheelView = (LuckyWheelView) findViewById(R.id.luckyWheel);
         totalTv = findViewById(R.id.total_tv);
         for(int i=0;i<3;i++){
@@ -128,7 +128,14 @@ public class MainActivity extends Activity {
         luckyWheelView.setLuckyRoundItemSelectedListener(new LuckyWheelView.LuckyRoundItemSelectedListener() {
             @Override
             public void LuckyRoundItemSelected(int index) {
-                Toast.makeText(getApplicationContext(), data.get(index).topText, Toast.LENGTH_SHORT).show();
+                String st = data.get(index).topText;
+                n = Integer.parseInt(st);
+                Log.d("Value of n",n+"");
+                totalScore = totalScore + n;
+                Log.d("TotalScore",totalScore+"");
+                totalTv.setText(totalScore+"");
+                Toast.makeText(getApplicationContext(), st, Toast.LENGTH_SHORT).show();
+
             }
         });
     }
