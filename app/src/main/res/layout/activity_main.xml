@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/bluebg"
     tools:context="com.ryan.luckywheel.MainActivity">
 
     <rubikstudio.library.LuckyWheelView
@@ -28,7 +28,7 @@
         android:textColor="@android:color/white"
         android:text="SPIN"
         android:textStyle="bold"
-        android:background="#F44336"
+        android:background="#AFEEEE"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="475dp"
@@ -44,18 +44,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:layout_marginLeft="100dp"
-            android:text="@string/total"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
+            android:textSize="40sp"
             android:id="@+id/total_tv"
             android:textStyle="bold"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="150dp"
             android:text="@string/zero"/>
     </LinearLayout>
 
@@ -65,7 +57,7 @@
         android:textColor="@android:color/white"
         android:text="@string/reset"
         android:textStyle="bold"
-        android:background="#F44336"
+        android:background="#40E0D0"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="350dp"
         android:layout_marginLeft="152dp"

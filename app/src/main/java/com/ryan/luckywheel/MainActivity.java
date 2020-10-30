@@ -137,7 +137,7 @@ public class MainActivity extends Activity {
                 totalScore = totalScore + n;
                 Log.d("TotalScore",totalScore+"");
                 totalTv.setText(totalScore+"");
-                Toast.makeText(getApplicationContext(), st, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getApplicationContext(), st, Toast.LENGTH_SHORT).show();
 
             }
         });
