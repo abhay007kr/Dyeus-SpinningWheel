@@ -26,30 +26,25 @@
         android:id="@+id/play"
         android:textSize="20sp"
         android:textColor="@android:color/white"
-        android:text="SPIN"
+        android:text="@string/spin"
         android:textStyle="bold"
         android:background="#AFEEEE"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="475dp"
+        android:layout_marginBottom="40dp"
         android:layout_alignBottom="@+id/luckyWheel"
-        android:layout_width="50dp"
+        android:layout_width="70dp"
         android:layout_height="50dp" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_below="@+id/luckyWheel">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="40sp"
+            android:textSize="30sp"
             android:id="@+id/total_tv"
             android:textStyle="bold"
-            android:layout_marginLeft="150dp"
-            android:text="@string/zero"/>
-    </LinearLayout>
+            android:layout_marginLeft="135dp"
+            android:text="@string/zero"
+            android:textColor="#FF0000"/>
 
     <Button
         android:id="@+id/reset"
@@ -59,7 +54,7 @@
         android:textStyle="bold"
         android:background="#40E0D0"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="350dp"
+        android:layout_marginBottom="200dp"
         android:layout_marginLeft="152dp"
         android:layout_alignBottom="@+id/play"
         android:layout_width="70dp"
